@@ -11,6 +11,9 @@ importers:
       pinia:
         specifier: ^2.1.7
         version: 2.2.2(vue@3.5.4)
+      tyme4ts:
+        specifier: ^1.1.2
+        version: 1.1.2
       vue:
         specifier: ^3.4.29
         version: 3.5.4
@@ -1792,6 +1795,9 @@ packages:
 
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
+
+  tyme4ts@1.1.2:
+    resolution: {integrity: sha512-MI6TKVfErtI8clI0vej+ddXE6az3CvEuefRjyOUn2kiMrcbsVZKmPCXiZ1FkP8l5dclWbS8K7XRjmhLWF2bQsg==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -3781,6 +3787,8 @@ snapshots:
   ts-interface-checker@0.1.13: {}
 
   tslib@2.7.0: {}
+
+  tyme4ts@1.1.2: {}
 
   type-check@0.4.0:
     dependencies:
