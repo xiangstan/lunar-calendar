@@ -17,11 +17,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     },
-    {
-      path: '/calendar',
-      name: 'Calendar',
-      component: () => import('../views/calendar/HomeView.vue')
-    }
+    // {
+    //   path: '/calendar',
+    //   name: 'Calendar',
+    //   component: () => import('../views/calendar/HomeView.vue')
+    // }
   ]
 })
 

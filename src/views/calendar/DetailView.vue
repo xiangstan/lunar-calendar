@@ -1,25 +1,93 @@
 <template>
   <div v-if="isModalShow" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-    <div class="bg-white rounded-lg shadow-lg w-full p-6 relative sm:w-[80%] md:w-[60%] lg:w-[50%]">
+    <div class="bg-white dark:bg-gray-500 dark:text-slate-100 rounded-lg shadow-lg w-full p-7 relative sm:w-[80%] md:w-[60%] lg:w-[50%]">
       <button @click="close" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
         </svg>
       </button>
-      <div>
-        <p>{{ lunarDate }}</p>
-        <div class="flex flex-row gap-1 items-start mb-4">
-          <div class="flex items-center font-bold self-start py-1 pr-1">
-            Gods:
+      <div class="border-double border-8 border-red-500 rounded-lg p-5">
+        <div class="flex flex-col gap-5 md:flex-row items-start">
+          <div class="flex flex-col pb-5 w-full md:w-64">
+            <p class="text-lg">
+              {{ getLongMonth }}
+            </p>
+            <div class="flex items-center justify-center text-9xl mb-3">
+              {{ day }}
+            </div>
+            <p class="block w-full">
+              {{ lunarDate }}
+            </p>
           </div>
-          <div v-if="showGods.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
-            <span v-for="g in showGods" :key="g" class="bg-amber-400 p-1">
-              {{ g }}
-            </span>
+          <div class="border-t-2 border-red-300 md:border-t-0 pt-2 md:pt-0 w-full">
+            <div class="flex flex-row gap-1 items-start mb-4">
+              <div class="flex items-center font-bold self-start py-1 px-2 w-16">
+                吉神
+              </div>
+              <div v-if="showGods.good.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
+                <span v-for="jg in showGods.good" :key="jg" class="p-1">
+                  {{ jg }}
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-row gap-1 items-start mb-4">
+              <div class="flex items-center font-bold self-start py-1 px-2 w-16">
+                凶神
+              </div>
+              <div v-if="showGods.bad.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
+                <span v-for="bg in showGods.bad" :key="bg" class="p-1">
+                  {{ bg }}
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-row gap-1 items-start mb-4">
+              <div class="flex items-center font-bold self-start py-1 px-2 w-16">
+                吉凶
+              </div>
+              <div v-if="showGods.both.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
+                <span v-for="dg in showGods.both" :key="dg" class="p-1">
+                  {{ dg }}
+                </span>
+              </div>
+            </div>
+            <div v-if="showGods.undefined.length > 0" class="flex flex-row gap-1 items-start mb-4">
+              <div class="flex items-center font-bold self-start py-1 px-2">
+                Undefined
+              </div>
+              <div class="flex flex-row flex-wrap gap-1 items-start">
+                <span v-for="ug in showGods.undefined" :key="ug" class="p-1">
+                  {{ ug }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-        <p>Luck: {{ getLuck }}</p>
-        <p>Avoid: {{ getBads }}</p>
+        <div class="flex flex-row gap-1 items-start mb-4">
+          <div class="flex items-center font-bold self-start py-1 px-2 bg-green-300 rounded-[50%]">
+            宜
+          </div>
+          <div v-if="showLuck.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
+            <span v-for="l in showLuck" :key="l" class="rounded hover:bg-green-300 p-1">
+              {{ l }}
+            </span>
+          </div>
+          <div v-else>
+            无
+          </div>
+        </div>
+        <div class="flex flex-row gap-1 items-start mb-4">
+          <div class="flex items-center font-bold self-start py-1 px-2 bg-red-400 text-slate-100 rounded-[50%]">
+            忌
+          </div>
+          <div v-if="showBads.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
+            <span v-for="b in showBads" :key="b" class="rounded hover:bg-red-400 hover:text-slate-100 p-1">
+              {{ b }}
+            </span>
+          </div>
+          <div v-else>
+            无
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -29,6 +97,11 @@
 import { computed, onMounted, ref } from 'vue';
 import  { useAppStore } from '@/stores/app';
 import { SolarDay } from 'tyme4ts';
+import { benevolentShensha, maleficShensha, dualShensha } from '@/utils/shensha';
+
+const goodShenshaSet = new Set(benevolentShensha.map(item => Object.keys(item)[0]));
+const badShenshaSet = new Set(maleficShensha.map(item => Object.keys(item)[0]));
+const bothShenshaSet = new Set(dualShensha.map(item => Object.keys(item)[0]));
 
 const appStore = useAppStore();
 
@@ -47,30 +120,71 @@ const props = defineProps({
   }
 });
 
-console.log(props);
-
 const lunarDate = ref('');
-const getGods = ref('');
-const getLuck = ref('');
+const getAllGods = ref('');
+const getAllLuck = ref('');
 const getBads = ref('');
 
-const showGods = computed(() => {
-  if (getGods.value.length < 1) {
+const getLongMonth = computed(() => {
+  let temp = 'undefined';
+  if (props.year > 0 && props.month >= 0 && props.day > 0) {
+    const options = { year: 'numeric', month: 'long' };
+    const newDate = new Date(`${props.year}/${props.month}/${props.day}`)
+    const formattedDate = newDate.toLocaleDateString(undefined, options);
+    const [month, year] = formattedDate.split(' ');
+    temp = `${month}, ${year}`;
+  }
+  return temp;
+})
+
+const showBads = computed(() => {
+  if (getBads.value.length < 1) {
     return [];
   }
   else {
-    const temp = getGods.value.split(',');
+    const temp = getBads.value.split(',');
+    return temp;
+  }
+})
+const showGods = computed(() => {
+  const gods = {
+    bad: [],
+    good: [],
+    both: [],
+    undefined: []
+  };
+  if (getAllGods.value.length > 0) {
+    const temp = getAllGods.value.split(',');
+    for (const g of temp) {
+      if (goodShenshaSet.has(g)) {
+        gods.good.push(g);
+      } else if (badShenshaSet.has(g)) {
+        gods.bad.push(g);
+      } else if (bothShenshaSet.has(g)) {
+        gods.both.push(g);
+      }
+      else {
+        gods.undefined.push(g)
+      }
+    }
+  }
+  return gods;
+})
+const showLuck = computed(() => {
+  if (getAllLuck.value.length < 1) {
+    return [];
+  }
+  else {
+    const temp = getAllLuck.value.split(',');
     return temp;
   }
 })
 
 onMounted(() => {
   const solarDate = SolarDay.fromYmd(props.year, props.month, props.day);
-  console.log(solarDate.toString())
   lunarDate.value = solarDate.getLunarDay();
-  console.log(lunarDate.value.toString())
-  getGods.value = `${lunarDate.value.getGods()}`;
-  getLuck.value = `${lunarDate.value.getRecommends()}`;
+  getAllGods.value = `${lunarDate.value.getGods()}`;
+  getAllLuck.value = `${lunarDate.value.getRecommends()}`;
   getBads.value = `${lunarDate.value.getAvoids()}`;
 })
 

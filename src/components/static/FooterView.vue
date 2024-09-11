@@ -16,14 +16,6 @@
             <li class="mb-2">
               <RouterLink to="/about" class="hover:text-white">About Us</RouterLink>
             </li>
-            <li class="mb-2">
-              <RouterLink to="/calendar" class="hover:text-white">
-                Calendar
-              </RouterLink>
-            </li>
-            <li class="mb-2">
-              <a href="/privacy" class="hover:text-white">Privacy Policy</a>
-            </li>
           </ul>
         </div>
 
@@ -34,11 +26,6 @@
             <li>
               <a href="https://twitter.com/yourprofile" target="_blank" class="flex items-center hover:text-white">
                 <img src="@/assets/img/twitter.svg" alt="Twitter" class="h-4 w-4 mr-1"> Twitter
-              </a>
-            </li>
-            <li>
-              <a href="https://facebook.com/yourprofile" target="_blank" class="flex items-center hover:text-white">
-                <img src="@/assets/img/facebook.svg" alt="Facebook" class="h-4 w-4 mr-1"> Facebook
               </a>
             </li>
             <li>
