@@ -110,9 +110,10 @@ const changeMonth = (action) => {
 }
 
 const checkToday = (day) => {
-  const todayYear = isToday.value.getFullYear();
-  const todayMonth = isToday.value.getMonth();
-  const todayDay = isToday.value.getDate();
+  const getToday = new Date();
+  const todayYear = getToday.getFullYear();
+  const todayMonth = getToday.getMonth();
+  const todayDay = getToday.getDate();
   // Create a date from getYear, getMonth, and the provided day
   const dateToCheck = new Date(`${getYear.value}/${getMonth.value}/${day}`);
   const checkYear = dateToCheck.getFullYear();
