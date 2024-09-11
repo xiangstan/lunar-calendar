@@ -10,7 +10,7 @@
               <span class="line bg-gray-700 dark:bg-slate-100"></span>
               <span class="line bg-gray-700 dark:bg-slate-100"></span>
             </div> -->
-            <a href="#" class="flex items-center py-5 px-2 text-gray-700">
+            <a href="https://outraverse.io" class="flex items-center py-5 px-2 text-gray-700" target="_blank">
               <img src="https://d1ex66uhwrtho1.cloudfront.net/img/outraverse-logo.png" class="w-6 h-6 mr-1 text-blue-400" alt="Outraverse Logo" />
               <span class="font-bold">Outraverse</span>
             </a>
