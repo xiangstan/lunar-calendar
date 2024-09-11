@@ -1,21 +1,42 @@
 <template>
   <div>
-    <div class="max-w-3xl mx-auto p-4 bg-white border border-gray-200 rounded-lg shadow-md">
+    <div class="max-w-5xl mx-auto p-4 bg-white dark:bg-slate-700 border border-gray-200 dark:border-gray-500 rounded-lg shadow-md">
       <div class="flex items-center justify-between mb-4">
-        <button @click="changeMonth('prev')" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Previous</button>
-        <h1 class="text-xl font-semibold">{{ monthYear }}</h1>
-        <button @click="changeMonth('next')" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Next</button>
+        <button class="px-4 py-2 text-white bg-slate-500 rounded hover:bg-slate-600" @click="gotoToday">
+          Today
+        </button>
+        <h1 class="text-xl font-semibold dark:text-gray-200">
+          {{ monthYear }}
+        </h1>
+        <div class="flex gap-1">
+          <button @click="changeMonth('prev')" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+            Previous
+          </button>
+          <button @click="changeMonth('next')" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+            Next
+          </button>
+        </div>
       </div>
       <div class="grid grid-cols-7 gap-1">
-        <div v-for="day in daysOfWeek" :key="day" class="text-center font-medium text-gray-700 bg-gray-200 p-2 rounded">
+        <div
+          v-for="day in daysOfWeek"
+          :key="day"
+          class="text-center font-medium text-gray-700 bg-gray-200 dark:bg-slate-400 dark:text-gray-100 p-2 rounded transition-all duration-300"
+        >
           {{ day }}
         </div>
         <div
           v-for="day in daysInMonth"
           :key="day.date"
-          :class="['text-center p-2 rounded', day.empty ? 'bg-gray-100' : 'bg-white']"
+          class="transition-all duration-300"
+          :class="['text-center', day.empty ? 'bg-gray-100 dark:bg-gray-700' : 'bg-white dark:bg-slate-600 dark:text-gray-100']"
         >
-          <a class="cursor-pointer hover:font-bold" @click="openModal" :data-day="day.day">
+          <a
+            class="cursor-pointer block w-full h-full p-2 hover:font-bold rounded transition-all duration-300"
+            :class="{'bg-slate-100 dark:bg-slate-500 text-blue-800 dark:text-blue-200 underline': checkToday(day.day)}"
+            @click="openModal"
+            :data-day="day.day"
+          >
             {{ day.day }}
           </a>
         </div>
@@ -86,6 +107,23 @@ const changeMonth = (action) => {
     date.setMonth(date.getMonth() + 1);
   }
   isToday.value = date;
+}
+
+const checkToday = (day) => {
+  const todayYear = isToday.value.getFullYear();
+  const todayMonth = isToday.value.getMonth();
+  const todayDay = isToday.value.getDate();
+  // Create a date from getYear, getMonth, and the provided day
+  const dateToCheck = new Date(`${getYear.value}/${getMonth.value}/${day}`);
+  const checkYear = dateToCheck.getFullYear();
+  const checkMonth = dateToCheck.getMonth();
+  const checkDay = dateToCheck.getDate();
+  // Compare the year, month, and day
+  return todayYear === checkYear && todayMonth === checkMonth && todayDay === checkDay;
+}
+
+const gotoToday = () => {
+  isToday.value = new Date();
 }
 
 const openModal = (e) => {

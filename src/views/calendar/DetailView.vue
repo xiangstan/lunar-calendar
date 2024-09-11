@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import  { useAppStore } from '@/stores/app';
 import { SolarDay } from 'tyme4ts';
 
