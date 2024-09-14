@@ -25,9 +25,15 @@
                 吉神
               </div>
               <div v-if="showGods.good.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
-                <span v-for="jg in showGods.good" :key="jg" class="p-1">
+                <router-link
+                  v-for="jg in showGods.good"
+                  :to="'/calendar/shen-sha/' + jg"
+                  :key="jg"
+                  class="cursor-pointer p-1 select-none hover:text-green-500 hover:font-bold"
+                  target="_blank"
+                >
                   {{ jg }}
-                </span>
+                </router-link>
               </div>
             </div>
             <div class="flex flex-row gap-1 items-start mb-4">
@@ -35,9 +41,15 @@
                 凶神
               </div>
               <div v-if="showGods.bad.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
-                <span v-for="bg in showGods.bad" :key="bg" class="p-1">
+                <router-link
+                  v-for="bg in showGods.bad"
+                  :to="'/calendar/shen-sha/' + bg"
+                  :key="bg"
+                  class="cursor-pointer p-1 select-none hover:text-red-500 hover:font-bold"
+                  target="_blank"
+                >
                   {{ bg }}
-                </span>
+                </router-link>
               </div>
             </div>
             <div class="flex flex-row gap-1 items-start mb-4">
@@ -45,9 +57,15 @@
                 吉凶
               </div>
               <div v-if="showGods.both.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
-                <span v-for="dg in showGods.both" :key="dg" class="p-1">
+                <router-link
+                  v-for="dg in showGods.both"
+                  :to="'/calendar/shen-sha/' + dg"
+                  :key="dg"
+                  class="cursor-pointer p-1 hover:text-amber-500 hover:font-bold"
+                  target="_blank"
+                >
                   {{ dg }}
-                </span>
+                </router-link>
               </div>
             </div>
             <div v-if="showGods.undefined.length > 0" class="flex flex-row gap-1 items-start mb-4">
@@ -71,7 +89,7 @@
               {{ l }}
             </span>
           </div>
-          <div v-else>
+          <div v-else class="items-start p-1">
             无
           </div>
         </div>
@@ -84,9 +102,17 @@
               {{ b }}
             </span>
           </div>
-          <div v-else>
+          <div v-else class="items-start p-1">
             无
           </div>
+        </div>
+        <div class="flex flex-row gap-1 items-start pt-5">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+          </svg>
+          <p>
+            点击神煞查看详细介绍
+          </p>
         </div>
       </div>
     </div>
