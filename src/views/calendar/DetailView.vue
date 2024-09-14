@@ -27,7 +27,7 @@
               <div v-if="showGods.good.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
                 <router-link
                   v-for="jg in showGods.good"
-                  :to="'/calendar/shen-sha/' + jg"
+                  :to="`/shen-sha/${jg}`"
                   :key="jg"
                   class="cursor-pointer p-1 select-none hover:text-green-500 hover:font-bold"
                   target="_blank"
@@ -43,7 +43,7 @@
               <div v-if="showGods.bad.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
                 <router-link
                   v-for="bg in showGods.bad"
-                  :to="'/calendar/shen-sha/' + bg"
+                  :to="`/shen-sha/${bg}`"
                   :key="bg"
                   class="cursor-pointer p-1 select-none hover:text-red-500 hover:font-bold"
                   target="_blank"
@@ -59,7 +59,7 @@
               <div v-if="showGods.both.length > 0" class="flex flex-row flex-wrap gap-1 items-start">
                 <router-link
                   v-for="dg in showGods.both"
-                  :to="'/calendar/shen-sha/' + dg"
+                  :to="`/shen-sha/${dg}`"
                   :key="dg"
                   class="cursor-pointer p-1 hover:text-amber-500 hover:font-bold"
                   target="_blank"
