@@ -1,1 +1,0 @@
-import{c as a,o as c}from"./index-VQFQXNc_.js";const u={__name:"SolarTime",setup(i){return navigator.geolocation.getCurrentPosition(function(e){let o=e.coords.longitude;console.log("Longitude:",o);let t=new Date,l=t.getUTCHours()+t.getUTCMinutes()/60,n=o/15,r=l+n;console.log("Local Solar Time (Approx):",r)}),(e,o)=>(c(),a("div",null," Solar Time "))}};export{u as default};
