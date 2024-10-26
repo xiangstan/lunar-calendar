@@ -1,4 +1,9 @@
-# calendar
+# TaoVision
+
+TaoVision (道观) is an open-source project designed to offer accurate fortune-telling based on the Chinese Bagua (八卦) system, using geolocation to provide personalized readings.
+
+
+---
 
 This template should help get you started developing with Vue 3 in Vite.
 
